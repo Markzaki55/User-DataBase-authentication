@@ -1,0 +1,60 @@
+/* Dashboard CSS */
+
+/* General styles */
+body {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    background-color: #f7f7f7; /* Light background color */
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styles */
+header {
+    background-color: #007bff; /* Bootstrap blue color */
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for header */
+    font-size: 1.5em;
+}
+
+/* Main content styles */
+main {
+    padding: 20px;
+    max-width: 1200px; /* Limit width */
+    margin: 0 auto; /* Center the content */
+}
+
+/* Section styles */
+main h2 {
+    margin-top: 30px; /* Add space before each section */
+    color: #333;
+}
+
+/* Lists */
+main ul {
+    list-style-type: none; /* Remove default list styles */
+    padding: 0;
+}
+
+main ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc; /* Light gray divider between list items */
+}
+
+/* Styling list items */
+main ul li:last-child {
+    border-bottom: none; /* Remove border from the last item */
+}
+
+/* Additional styles */
+p {
+    font-size: 1.1em;
+    line-height: 1.5;
+    color: #555;
+}
+
+/* Hover effects for list items */
+main ul li:hover {
+    background-color: #f1f1f1; /* Light gray hover effect */
+}

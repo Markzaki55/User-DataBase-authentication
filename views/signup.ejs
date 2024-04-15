@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>Sign Up</h1>
+    <form method="POST" action="/api/signup">
+        <label>Name:</label>
+        <input type="text" name="name" required><br>
+        
+        <label>Email:</label>
+        <input type="email" name="email" required><br>
+        
+        <label>Password:</label>
+        <input type="password" name="password" required><br>
+        
+        <label>Role:</label>
+        <select name="role">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+        </select><br>
+        
+        <label>Act:</label>
+        <select name="act">
+            <option value="human">Human</option>
+            <option value="vampire">Vampire</option>
+            <option value="werewolf">Werewolf</option>
+            <option value="siren">Siren</option>
+        </select><br>
+        
+        <button type="submit">Sign Up</button>
+    </form>
+</body>
+</html>

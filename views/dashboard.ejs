@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <!-- Link to CSS file -->
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+        <!-- Add any other header content here, such as navigation -->
+    </header>
+    <main>
+        <h2>Statistics</h2>
+        <p>Total Users: <%= data.usersCount %></p>
+        <p>Active Users: <%= data.activeUsersCount %></p>
+        <h2>Recent Activities</h2>
+        <ul>
+            <% data.recentActivities.forEach(activity => { %>
+                <li><%= activity.details %> at <%= activity.timestamp %></li>
+            <% }); %>
+        </ul>
+        <h2>User Role Breakdown</h2>
+        <ul>
+            <% data.userRolesBreakdown.forEach(role => { %>
+                <li><%= role._id %>: <%= role.count %></li>
+            <% }); %>
+        </ul>
+        <!-- Add any other dashboard content here -->
+    </main>
+    <!-- Add footer if needed -->
+</body>
+</html>

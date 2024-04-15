@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Main Page</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>Welcome, <%= username %>!</h1>
+    <p>You are <%= act %>.</p>
+
+    <% if (isAdmin) { %>
+        <button onclick="location.href='/api/dashboard'">Go to Dashboard</button>
+    <% } %>
+
+</body>
+</html>
