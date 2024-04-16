@@ -2,12 +2,12 @@
 
 const express = require('express');
 const router = express.Router();
+exports.router = router;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 const dotenv = require('dotenv');
 const rateLimit = require('express-rate-limit');
-const winston = require('winston');
 
 dotenv.config();
 
@@ -15,39 +15,9 @@ dotenv.config();
 const User = require('../models/User');
 const ActivityLog = require('../models/ActivityLog');
 const authenticate = require('../middlewares/authenticate');
+const { authorizeAdmin } = require('../middlewares/authorizeAdmin');
+const { errorHandler } = require('../errorHandler');
 
-async function authorizeAdmin(req, res, next) {
-    try {
-        // Retrieve the token from the request headers
-        const token = req.headers.authorization?.split(' ')[1];
-        if (!token) {
-            return res.status(401).json({ error: 'Authorization header missing or incorrect' });
-        }
-
-        // Decode the token to get the user ID
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-        const userId = decodedToken.userId;
-
-        // Query the database to retrieve the user's information
-        const user = await User.findById(userId);
-        
-        // If the user does not exist, respond with a 404 Not Found error
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-
-        // Check if the user's role is 'admin'
-        if (user.role !== 'admin') {
-            return res.status(403).json({ error: `Forbidden: You do not have admin privileges (role: ${user.role})` });
-        }
-
-        // If the user is an admin, proceed to the next middleware or route handler
-        next();
-    } catch (error) {
-        console.error('Error authorizing admin:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-}
 // setting limits
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -55,20 +25,6 @@ const limiter = rateLimit({
 });
 
 router.use(limiter);
-
-// Error handling middleware
-const errorHandler = (err, req, res, next) => {
-    // Log error with Winston or console.error
-    winston.error(`Error: ${err.message}`);
-
-    // Send appropriate HTTP status and error message
-    res.status(err.status || 500).json({ error: err.message || 'Internal server error' });
-};
-
-// Add the error handler as the last middleware
-router.use(errorHandler);
-
-
 // Joi schemas for request validation
 const signUpSchema = Joi.object({
     name: Joi.string().required(),
@@ -160,7 +116,7 @@ const loginHandler = async (req, res, next) => {
         // Compare provided password with stored hashed password
         const isMatch = await bcrypt.compare(password, user.hashedPassword);
         if (!isMatch) {
-            return res.status(401).json({ error: 'Invalid email or password' });
+            return res.status(401).json({ error: 'Invalid password' });
         }
 
         // Create a JWT token with the user's ID
@@ -178,13 +134,16 @@ const loginHandler = async (req, res, next) => {
 
         // Respond with the token
         res.json({ token });
+
         res.redirect('/api/mainpage');
+
     } catch (error) {
         next(error); // Pass error to error handling middleware
     }
     
  
 };
+
 const getDashboardData = async (req, res, next) => {
     try {
         // Fetch user count
@@ -222,9 +181,9 @@ const getDashboardData = async (req, res, next) => {
 
 
 // Define routes
-router.post('/SignUp', signUpHandler);
-router.post('/signin', loginHandler);
-router.get('/dashboard', authenticate, authorizeAdmin, getDashboardData);
+router.post('/SignUp',errorHandler, signUpHandler);
+router.post('/signin',errorHandler, loginHandler);
+router.get('/dashboard', authenticate, authorizeAdmin, errorHandler ,getDashboardData);
 
 
 // Route for displaying the signup form

@@ -17,14 +17,13 @@ app.use(bodyParser.json()); // For JSON payloads
 app.use(bodyParser.urlencoded({ extended: true })); // For URL-encoded payloads
 app.set('view engine', 'ejs');
  app.use(express.static('public'));
-app.set('view engine', 'ejs');
 app.set('views');
 
 
 
 // Connect to MongoDB database
 
-mongoose.connect("mongodb+srv://markzakimalakzaki:Mark_5555@cluster0.2ptezno.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect("mongodb+srv://username:password@cluster0.2ptezno.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 .then(()=>{
 
     console.log("connection sucssed ");
