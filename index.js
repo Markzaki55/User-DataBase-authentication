@@ -2,6 +2,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes'); // Import the user routes
 
@@ -14,10 +15,11 @@ const PORT = 3000;
 
 // Middleware
 app.use(bodyParser.json()); // For JSON payloads
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true })); // For URL-encoded payloads
 app.set('view engine', 'ejs');
- app.use(express.static('public'));
 app.set('views');
+app.use(cookieParser());
 
 
 

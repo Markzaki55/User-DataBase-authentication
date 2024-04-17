@@ -5,10 +5,18 @@ const User = require('../models/User');
 async function authorizeAdmin(req, res, next) {
     try {
         // Retrieve the token from the request headers
-        const token = req.headers.authorization?.split(' ')[1];
-        if (!token) {
-            return res.status(401).json({ error: 'Authorization header missing or incorrect' });
-        }
+       // Try to get the token from the Authorization header
+    let token = req.headers.authorization?.split(' ')[1];
+
+    // If the token is not found in the header, check the cookies
+    if (!token) {
+        token = req.cookies?.auth_token; // Assuming the cookie name is 'auth_token'
+    }
+
+    // If the token is still not found, return an error
+    if (!token) {
+        return res.status(401).json({ error: 'Authorization header or cookie missing or incorrect' });
+    }
 
         // Decode the token to get the user ID
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);

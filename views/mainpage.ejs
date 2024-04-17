@@ -7,10 +7,41 @@
 <body>
     <h1>Welcome, <%= username %>!</h1>
     <p>You are <%= act %>.</p>
+    <p>Your auth token: <%= _authtoken %></p>
 
     <% if (isAdmin) { %>
-        <button onclick="location.href='/api/dashboard'">Go to Dashboard</button>
+        <button id="dashboardButton">Go to Dashboard</button>
     <% } %>
 
+    <script>
+        // JavaScript function to handle button click
+
+        document.getElementById('dashboardButton').addEventListener('click', function() {
+            // Create a new request to /api/dashboard
+            fetch('/api/dashboard', {
+                method: 'GET', // Use GET method for the request
+                headers: {
+                    // Set the Authorization header with the auth token
+                    'authorization': 'Bearer <%=_authtoken%>'
+         
+                }
+            
+            })
+            .then(response => {
+                // Handle the response from the server
+                if (response.ok) {
+                    // Redirect to the dashboard if the request is successful
+                    window.location.href = '/api/dashboard';
+                } else {
+                    // Handle any errors from the server
+                    console.error('Error accessing the dashboard:', response.statusText);
+                }
+            })
+            .catch(error => {
+                // Handle any network errors
+                console.error('Network error:', error);
+            });
+        });
+    </script>
 </body>
 </html>
