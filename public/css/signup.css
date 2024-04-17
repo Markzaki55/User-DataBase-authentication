@@ -1,0 +1,109 @@
+/* General styles */
+body {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    background-color: #f8f9fa; /* Light mode background color */
+    margin: 0;
+    padding: 0;
+}
+
+/* Container styles */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Title and logo styles */
+h1 {
+    font-size: 2em;
+    color: #007bff; /* Bootstrap primary color */
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    object-fit: contain;
+}
+
+/* Form styles */
+form {
+    width: 100%;
+    max-width: 400px;
+    background-color: #fff; /* Light mode background color */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for form */
+}
+
+/* Input fields */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ced4da; /* Bootstrap border color */
+    box-shadow: none;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Blue shadow on focus */
+    border-color: #007bff; /* Bootstrap primary color */
+}
+
+/* Button styles */
+button[type="submit"] {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #007bff; /* Bootstrap primary color */
+    color: #fff;
+    border: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Dark mode styles */
+.dark-mode {
+    background-color: #343a40; /* Dark mode background color */
+    color: #f8f9fa; /* Light text color */
+}
+
+.dark-mode form {
+    background-color: #495057; /* Dark mode form background */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #adb5bd; /* Dark mode form border color */
+}
+
+.dark-mode .form-control {
+    background-color: #495057;
+    color: #f8f9fa;
+    border: 1px solid #adb5bd; /* Dark mode input field border color */
+}
+
+.dark-mode .form-control:focus {
+    box-shadow: 0 0 5px rgba(173, 181, 189, 0.5); /* Dark mode input focus shadow color */
+    border-color: #adb5bd; /* Dark mode input field focus border color */
+}
+
+.dark-mode button[type="submit"] {
+    background-color: #343a40; /* Dark mode button color */
+    color: #f8f9fa; /* Dark mode button text color */
+    border: 1px solid #adb5bd; /* Dark mode button border color */
+}
+
+.dark-mode button[type="submit"]:hover {
+    background-color: #212529; /* Darker button hover color */
+    border-color: #adb5bd; /* Darker button hover border color */
+}

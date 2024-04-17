@@ -1,0 +1,67 @@
+/* General styles */
+body {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    background-color: #f8f9fa; /* Light mode background color */
+    margin: 0;
+    padding: 0;
+}
+
+/* Container styles */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Title styles */
+h1 {
+    font-size: 2em;
+    color: #007bff; /* Bootstrap primary color */
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+/* Buttons styles */
+button {
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+button[type="button"] {
+    border: none;
+    color: #fff;
+}
+
+button#theme-toggle-btn {
+    border: 1px solid #6c757d;
+    color: #6c757d;
+}
+
+button#theme-toggle-btn:hover {
+    background-color: #343a40;
+    color: #fff;
+}
+
+.dark-mode {
+    background-color: #343a40;
+    color: #f8f9fa; /* Light text color */
+}
+
+.dark-mode h1 {
+    color: #adb5bd; /* Light title color */
+}
+
+.dark-mode button[type="submit"] {
+    background-color: #343a40;
+    color: #f8f9fa;
+    border: 1px solid #adb5bd; /* Dark mode button border color */
+}
+
+.dark-mode button[type="submit"]:hover {
+    background-color: #212529;
+    border-color: #adb5bd;
+}

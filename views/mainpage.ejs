@@ -1,45 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
     <title>Main Page</title>
-    <link rel="stylesheet" href="/css/styles.css">
+
+    <!-- Bootstrap CSS from CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Bootstrap Icons from CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+    <!-- Link to your custom CSS file -->
+    <link rel="stylesheet" href="/css/main.css">
+
+    <!-- Font Awesome for themed icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
+
 <body>
-    <h1>Welcome, <%= username %>!</h1>
-    <p>You are <%= act %>.</p>
-    <p>Your auth token: <%= _authtoken %></p>
+    <div id="main-container" class="container d-flex flex-column justify-content-center align-items-center min-vh-100">
+        <h1 class="mb-4 text-primary">
+            <i class="bi bi-house-fill mr-2"></i>
+            Welcome, <%= username %>!
+        </h1>
 
-    <% if (isAdmin) { %>
-        <button id="dashboardButton">Go to Dashboard</button>
-    <% } %>
+        <p>You are <%= act %>.</p>
+        <p>Your auth token: <code><%= _authtoken %></code></p>
 
+        <% if (isAdmin) { %>
+            <button id="dashboardButton" class="btn btn-primary mt-3">
+                <i class="bi bi-speedometer2"></i> Go to Dashboard
+            </button>
+        <% } %>
+
+        <!-- Theme toggle button -->
+        <button id="theme-toggle-btn" class="btn btn-secondary mt-4">
+            <i class="bi bi-moon-fill"></i> Toggle Dark Mode
+        </button>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript for dashboard button and theme toggle -->
     <script>
-        // JavaScript function to handle button click
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle dashboard button click
+            const dashboardButton = document.getElementById('dashboardButton');
+            if (dashboardButton) {
+                dashboardButton.addEventListener('click', function() {
+                    fetch('/api/dashboard', {
+                        method: 'GET',
+                        headers: {
+                            'authorization': 'Bearer <%= _authtoken %>'
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            window.location.href = '/api/dashboard';
+                        } else {
+                            console.error('Error accessing the dashboard:', response.statusText);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Network error:', error);
+                    });
+                });
+            }
 
-        document.getElementById('dashboardButton').addEventListener('click', function() {
-            // Create a new request to /api/dashboard
-            fetch('/api/dashboard', {
-                method: 'GET', // Use GET method for the request
-                headers: {
-                    // Set the Authorization header with the auth token
-                    'authorization': 'Bearer <%=_authtoken%>'
-         
-                }
-            
-            })
-            .then(response => {
-                // Handle the response from the server
-                if (response.ok) {
-                    // Redirect to the dashboard if the request is successful
-                    window.location.href = '/api/dashboard';
+            // Theme toggle button
+            const toggleBtn = document.getElementById('theme-toggle-btn');
+            const container = document.getElementById('main-container');
+
+            // Check and apply saved theme on page load
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                container.classList.toggle('dark-mode', savedTheme === 'dark');
+                updateToggleButton();
+            }
+
+            // Function to update the toggle button icon and text
+            function updateToggleButton() {
+                if (container.classList.contains('dark-mode')) {
+                    toggleBtn.innerHTML = '<i class="bi bi-sun-fill"></i> Toggle Light Mode';
                 } else {
-                    // Handle any errors from the server
-                    console.error('Error accessing the dashboard:', response.statusText);
+                    toggleBtn.innerHTML = '<i class="bi bi-moon-fill"></i> Toggle Dark Mode';
                 }
-            })
-            .catch(error => {
-                // Handle any network errors
-                console.error('Network error:', error);
+            }
+
+            // Event listener to toggle between dark and light mode
+            toggleBtn.addEventListener('click', () => {
+                container.classList.toggle('dark-mode');
+                localStorage.setItem('theme', container.classList.contains('dark-mode') ? 'dark' : 'light');
+                updateToggleButton();
             });
         });
     </script>
