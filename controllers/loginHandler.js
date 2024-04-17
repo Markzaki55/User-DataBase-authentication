@@ -55,6 +55,7 @@ const loginHandler = async (req, res, next) => {
         res.redirect('/api/mainpage')
 
     } catch (error) {
+        
         next(error); // Pass error to error handling middleware
     }
 
